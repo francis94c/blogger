@@ -7,6 +7,8 @@
     "name": "(string) Internal name of blog table to load",
     "header_footer": "(boolean) Whether to display the header and footer on all app pages.",
     "new_post_url": "(string) Base URL for the app page responsible for showing the post editor",
+    "view_post_url": "",
+    "edit_post_url": "",
     "admin_session_key": "(string) The session key to read logged in admin id from."
   },
   "description": "A Blog Library for Code Igniter.",

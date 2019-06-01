@@ -12,9 +12,16 @@ class BloggerAppCore {
    * [listPosts description]
    * @return [type] [description]
    */
-  function listPosts($page=1, $callback=null, $hits=false) {
+  function listPosts($page=1, $callback=null, $filter=false, $hits=false) {
     if (isset($this->app->params["app_page"]) && isset($this->app->params["page"])) $page = $this->app->params["page"];
-    $this->app->blog->renderPostItems(null, $callback, "../splints/{$this->app->splint}/views/empty_view", $page, $this->app->limit, false, $hits);
+    $this->app->blog->renderPostItems(null, $callback, "../splints/{$this->app->splint}/views/empty_view", $page, $this->app->limit, $filter, $hits);
+    $params = [
+      "base_url"    => $this->app->fetch_param("list_posts_url", app_url("posts")),
+      "total_posts" => $this->app->blog->getPostsCount(),
+      "per_page"    => $this->app->limit,
+      "uri_segment" => $this->app->fetch_param("page_number_uri_segment", 4)
+    ];
+    $this->app->view("paginator", $params);
   }
   /**
    * [latch_vars_to_config description]
@@ -38,7 +45,7 @@ class BloggerAppCore {
    * @return [type]           [description]
    */
   function savePost($posterId=null) {
-    $this->app->blog->savePost($posterId);
+    return $this->app->blog->savePost($posterId);
   }
   /**
    * [viewPost description]
