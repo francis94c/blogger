@@ -6,15 +6,23 @@ class Home extends SplintAppController {
   private $limit = 5;
 
   function index() {
+    if ($this->fetch_param("header_footer") == true) {
+      $data = array();
+      $data["selected"] = -1;
+      $this->fill_params_in_array(["title", "header_name"], $data);
+      $this->view("header", $data);
+      $this->set_param("w3css", false);
+      $this->set_param("fontsawesome", false);
+    } else {
+      if (!isset($this->params["w3css"])) $this->set_param("w3css", true);
+      if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
+    }
     if (isset($this->params["app_page"])) {
       switch ($this->params["app_page"]){
         case "Home":
           $this->listPosts();
       }
       return;
-    }
-    if ($this->get_param("header_footer") == true) {
-      $this->view("header");
     }
     $this->listPosts(1);
   }
@@ -49,6 +57,14 @@ class Home extends SplintAppController {
     if (!isset($page) && isset($this->params["app_page"]) && isset($this->params["page"])) $page = $this->params["page"];
     if (!isset($page)) $page = 1;
     $this->blog->renderPostItems(null, null, "../splints/$this->splint/views/empty_view", $page, $this->limit, false, false);
+  }
+  /**
+   * [latch_vars_to_config description]
+   * @return [type] [description]
+   */
+  private function latch_vars_to_config() {
+    $this->config->set_item("$splint/w3css", $this->fetch_param("w3css"));
+    $this->config->set_item("$splint/fontsawesome", $this->fetch_param("fontsawesome"));
   }
 }
 ?>
