@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends SplintAppController {
 
-  private $limit = 5;
+  public $limit = 5;
 
   /**
    * [Initialize description]
@@ -57,6 +57,36 @@ class Admin extends SplintAppController {
    * @return [type] [description]
    */
   function savePost() {
+    $this->load->library("session");
+    $this->bind("session");
+    if (ENVIRONMENT == "development") $this->session->set_userdata("test_admin_id", 1);
+    $posterId = $this->fetch_param("admin_session_key", null);
+    if ($posterId != null) $posterId = $this->session->userdata($posterId);
+    $action = $this->core->savePost($posterId);
+    $this->load->package("francis94c/toast");
+    if ($action == Blogger::CREATE_AND_PUBLISH || $action == Blogger::CREATE || $action == Blogger::PUBLISH) {
+      switch ($action) {
+        case Blogger::CREATE_AND_PUBLISH:
+          $this->ci->toast->latch("Blog Post Created and Published Succesfully!", "w3-green");
+          break;
+        case Blogger::CREATE:
+          $this->ci->toast->latch("Blog Post Created Successfully!", "w3-green");
+          break;
+        default:
+          $this->ci->toast->latch("There was an error saving the blog post", "w3-red");
+          break;
+      }
+      redirect($this->parent_uri("admin/list_posts"));
+    } else {
+      //redirect("Admin/editBlog/" . $this->input->post("id"));
+    }
+  }
+  /**
+   * [listPosts description]
+   * @param  integer $page [description]
+   * @return [type]        [description]
+   */
+  function listPosts($page=1) {
     if ($this->fetch_param("header_footer") == true) {
       $data = array();
       $data["selected"] = -1;
@@ -70,12 +100,24 @@ class Admin extends SplintAppController {
       if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
     }
     $this->core->latchVarsToConfig();
-    $this->load->library("session");
-    $this->bind("session");
-    if (ENVIRONMENT == "development") $this->session->set_userdata("test_admin_id", 1);
-    $posterId = $this->fetch_param("admin_session_key", null);
-    if ($posterId != null) $posterId = $this->session->userdata($posterId);
-    $this->core->savePost($posterId);
+    $this->load->package("francis94c/toast");
+    $this->ci->toast->toast();
+    $this->core->listPosts($page, $this->fetch_param("edit_post_url", $this->parent_uri("admin/edit_post"), true));
+  }
+  /**
+   * [editPost description]
+   * @param  [type] $id [description]
+   * @return [type]     [description]
+   */
+  function editPost($id) {
+
+  }
+  /**
+   * [finalize description]
+   * @return [type] [description]
+   */
+  function finalize() {
+    $this->view("footer");
   }
 }
 ?>
