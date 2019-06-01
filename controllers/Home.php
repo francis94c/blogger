@@ -5,16 +5,16 @@ class Home extends SplintAppController {
 
   public $limit = 5;
 
-  function index() {
+  function index($page=1) {
     if (isset($this->params["app_page"])) {
       // Page Logic.
       switch ($this->params["app_page"]){
         case "Home":
-          $this->core->listPosts(1, $this->fetch_param("view_post_url", $this->parent_uri("view_post")));
+          $this->core->listPosts($this->fetch_param("page", 1), $this->fetch_param("view_post_url", $this->parent_uri("view_post")));
       }
       return;
     }
-    $this->core->listPosts(1, $this->fetch_param("view_post_url", $this->parent_uri("view_post")));
+    $this->core->listPosts($page, $this->fetch_param("view_post_url", $this->parent_uri("view_post")));
   }
   /**
    * [install description]
@@ -67,6 +67,14 @@ class Home extends SplintAppController {
    */
   function viewPost($id) {
     $this->core->renderPost($id);
+  }
+  /**
+   * [listPosts description]
+   * @param  integer $page [description]
+   * @return [type]        [description]
+   */
+  function listPosts($page=1) {
+    $this->core->listPosts($page, $this->fetch_param("view_post_url", $this->parent_uri("view_post")));
   }
 }
 ?>
