@@ -3,28 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends SplintAppController {
 
-  private $limit = 5;
+  public $limit = 5;
 
   function index() {
-    if ($this->fetch_param("header_footer") == true) {
-      $data = array();
-      $data["selected"] = -1;
-      $this->fill_params_in_array(["title", "header_name"], $data);
-      $this->view("header", $data);
-      $this->set_param("w3css", false);
-      $this->set_param("fontsawesome", false);
-    } else {
-      if (!isset($this->params["w3css"])) $this->set_param("w3css", true);
-      if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
-    }
     if (isset($this->params["app_page"])) {
+      // Page Logic.
       switch ($this->params["app_page"]){
         case "Home":
-          $this->listPosts();
+          $this->core->listPosts(1, $this->fetch_param("view_post_url", $this->parent_uri("view_post")), true);
       }
       return;
     }
-    $this->listPosts(1);
+    $this->core->listPosts(1, $this->fetch_param("view_post_url", $this->parent_uri("view_post")), true);
   }
   /**
    * [install description]
@@ -45,26 +35,29 @@ class Home extends SplintAppController {
     if (isset($this->params["name"])) $params["name"] = $this->params["name"];
     $this->load->splint("francis94c/blog", "+Blogger", $params, "blog");
     $this->load->package("francis94c/cdn-helper");
-    $this->bind("blog");
+    $this->bind("blog", "core");
     if (isset($this->params["per_page_count"])) $this->limit = $this->params["per_page_count"];
+    // Start
+    if ($this->fetch_param("header_footer") == true) {
+      $data = array();
+      $data["selected"] = -1;
+      $this->fill_params_in_array(["title", "header_name"], $data);
+      $this->view("header", $data);
+      $this->set_param("w3css", false);
+      $this->set_param("fontsawesome", false);
+    } else {
+      if (!isset($this->params["w3css"])) $this->set_param("w3css", true);
+      if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
+    }
+    $this->core->latchVarsToConfig();
   }
   /**
-   * [homePage description]
-   * @return [type] [description]
+   * [viewPost description]
+   * @param  [type] $id [description]
+   * @return [type]     [description]
    */
-  function listPosts() {
-    if (func_num_args() > 0 && is_numeric(func_get_arg(0))) $page = func_get_arg(0);
-    if (!isset($page) && isset($this->params["app_page"]) && isset($this->params["page"])) $page = $this->params["page"];
-    if (!isset($page)) $page = 1;
-    $this->blog->renderPostItems(null, null, "../splints/$this->splint/views/empty_view", $page, $this->limit, false, false);
-  }
-  /**
-   * [latch_vars_to_config description]
-   * @return [type] [description]
-   */
-  private function latch_vars_to_config() {
-    $this->config->set_item("$splint/w3css", $this->fetch_param("w3css"));
-    $this->config->set_item("$splint/fontsawesome", $this->fetch_param("fontsawesome"));
+  function viewPost($id) {
+
   }
 }
 ?>
