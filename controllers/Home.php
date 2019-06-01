@@ -13,6 +13,9 @@ class Home extends SplintAppController {
       }
       return;
     }
+    if ($this->get_param("header_footer") == true) {
+      $this->view("header");
+    }
     $this->listPosts(1);
   }
   /**
