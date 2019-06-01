@@ -10,11 +10,11 @@ class Home extends SplintAppController {
       // Page Logic.
       switch ($this->params["app_page"]){
         case "Home":
-          $this->core->listPosts(1, $this->fetch_param("view_post_url", $this->parent_uri("view_post")), true);
+          $this->core->listPosts(1, $this->fetch_param("view_post_url", $this->parent_uri("view_post")));
       }
       return;
     }
-    $this->core->listPosts(1, $this->fetch_param("view_post_url", $this->parent_uri("view_post")), true);
+    $this->core->listPosts(1, $this->fetch_param("view_post_url", $this->parent_uri("view_post")));
   }
   /**
    * [install description]
@@ -52,12 +52,21 @@ class Home extends SplintAppController {
     $this->core->latchVarsToConfig();
   }
   /**
+   * [finalize description]
+   * @return [type] [description]
+   */
+  function finalize() {
+    if ($this->fetch_param("header_footer") == true) {
+      $this->view("footer");
+    }
+  }
+  /**
    * [viewPost description]
    * @param  [type] $id [description]
    * @return [type]     [description]
    */
   function viewPost($id) {
-
+    $this->core->renderPost($id);
   }
 }
 ?>
