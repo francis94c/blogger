@@ -2,6 +2,7 @@
   "name": "francis94c/blogger",
   "type": "application",
   "paged": false,
+  "config": "@blogger",
   "description": "A Blog Library for Code Igniter.",
   "tags": ["blog", "content", "ui", "application"],
   "page": "https://github.com/francis94c/blogger",
