@@ -53,7 +53,7 @@ $route['default_controller']   = 'Home';
 $route['404_override']         = '';
 $route['translate_uri_dashes'] = FALSE;
 // View Posts.
-$route["view_post"]            = "Home/viewPost";
+$route["view_post/(:any)"]            = "Home/viewPost";
 // Admin Routes.
 $route["admin"]                = "Admin";
 $route["admin/new_post"]       = "Admin/newPost";
