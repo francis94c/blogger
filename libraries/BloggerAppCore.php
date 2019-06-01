@@ -40,5 +40,13 @@ class BloggerAppCore {
   function savePost($posterId=null) {
     $this->app->blog->savePost($posterId);
   }
+  /**
+   * [viewPost description]
+   * @param  [type] $id [description]
+   * @return [type]     [description]
+   */
+  function renderPost($id) {
+    $this->app->blog->renderPost($id);
+  }
 }
 ?>
