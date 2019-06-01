@@ -22,5 +22,5 @@
     <a href="<?=app_url()?>" class="w3-bar-item link">
       <i class="fab fa-blogger-b fa-4x"></i>
     </a>
-    <span class="w3-bar-item w3-margin-top w3-large w3-mobile w3-hover-black"><?=isset($header_name) ? $header_name : "Blog"?></span>
+    <span class="w3-bar-item w3-margin-top w3-large w3-mobile"><?=isset($header_name) ? $header_name : "Blog"?></span>
   </div>
