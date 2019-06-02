@@ -6,9 +6,10 @@
   "config-items": {
     "name": "(string) Internal name of blog table to load",
     "header_footer": "(boolean) Whether to display the header and footer on all app pages.",
-    "new_post_url": "(string) Base URL for the app page responsible for showing the post editor",
-    "view_post_url": "",
-    "edit_post_url": "",
+    "new_post_url": "(string) Base URL for the app page responsible for showing the post editor, necessary if instance is paged.",
+    "view_post_url": "(string) Base URL for viewing a post, necessary if instance is paged.",
+    "edit_post_url": "(string), Base URL for editing posts, necessary if instance is paged.",
+    "save_post_url": "(string), Base URL for saving, creating, publishing and deleting posts, necessary if instance is paged.",
     "admin_session_key": "(string) The session key to read logged in admin id from.",
     "secure": "(boolean) Whether to restrict access to Admin controller if no id is found in session with ' admin_session_key' (not logged in)."
   },
