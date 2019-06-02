@@ -15,7 +15,7 @@
     "secure": "(boolean) Whether to restrict access to Admin controller if no id is found in session with ' admin_session_key' (not logged in).",
     "w3_theme": "(string) The w3-theme color css file name to use. see https://www.w3schools.com/w3css/w3css_color_themes.asp. e.g teal, green, blue"
   },
-  "description": "A Blog Library for Code Igniter.",
+  "description": "A Blog Application for Code Igniter.",
   "tags": ["blog", "content", "ui", "application"],
   "page": "https://github.com/francis94c/blogger",
   "authors": [
