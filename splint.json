@@ -9,7 +9,8 @@
     "new_post_url": "(string) Base URL for the app page responsible for showing the post editor",
     "view_post_url": "",
     "edit_post_url": "",
-    "admin_session_key": "(string) The session key to read logged in admin id from."
+    "admin_session_key": "(string) The session key to read logged in admin id from.",
+    "secure": "(boolean) Whether to restrict access to Admin controller if no id is found in session with ' admin_session_key' (not logged in)."
   },
   "description": "A Blog Library for Code Igniter.",
   "tags": ["blog", "content", "ui", "application"],

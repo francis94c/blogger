@@ -9,6 +9,13 @@ class Admin extends SplintAppController {
    * [Initialize description]
    */
   function initialize() {
+    $this->load->library("session"); $this->bind("session");
+    if ($this->fetch_param("secure", true)) {
+      if ( $this->session->userdata($this->fetch_param("admin_session_key")) == null) {
+        header('HTTP/1.0 401 Unauthorized');
+        die("Unauthorized Access.");
+      }
+    }
     $params = array();
     if (isset($this->params["name"])) $params["name"] = $this->params["name"];
     $this->load->splint("francis94c/blog", "+Blogger", $params, "blog");
@@ -59,7 +66,6 @@ class Admin extends SplintAppController {
   function savePost() {
     $this->load->library("session");
     $this->bind("session");
-    if (ENVIRONMENT == "development") $this->session->set_userdata("test_admin_id", 1);
     $posterId = $this->fetch_param("admin_session_key", null);
     if ($posterId != null) $posterId = $this->session->userdata($posterId);
     $action = $this->core->savePost($posterId);
