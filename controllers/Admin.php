@@ -149,6 +149,7 @@ class Admin extends SplintAppController {
    * @return [type] [description]
    */
   function finalize() {
+    $this->view("scripts");
     $this->view("footer");
   }
 }

@@ -56,6 +56,7 @@ class Home extends SplintAppController {
    * @return [type] [description]
    */
   function finalize() {
+    $this->view("scripts");
     if ($this->fetch_param("header_footer") == true) {
       $this->view("footer");
     }

@@ -91,5 +91,8 @@ class BloggerAppCore {
     ];
     $this->app->view("navigation", ["menu" => $menu]);
   }
+  function loadScripts() {
+    
+  }
 }
 ?>
