@@ -55,5 +55,41 @@ class BloggerAppCore {
   function renderPost($id) {
     $this->app->blog->renderPost($id);
   }
+  /**
+   * [loadAdminPostListingNavigation description]
+   * @return [type] [description]
+   */
+  function loadAdminPostListingNavigation() {
+    $menu = [
+      [
+        "class" => "w3-theme w3-hover-blue",
+        "name"  => "Back",
+        "icon"  => "fa-arrow-circle-left",
+        "link"  => $this->app->fetch_param("admin_home_url", app_url("admin"))
+      ]
+    ];
+    $this->app->view("navigation", ["menu" => $menu]);
+  }
+  /**
+   * [loadEditorNavigation description]
+   * @return [type] [description]
+   */
+  function loadEditorNavigation() {
+    $menu = [
+      [
+        "class" => "w3-theme w3-hover-blue",
+        "name"  => "Home",
+        "icon"  => "fa-home",
+        "link"  => $this->app->fetch_param("admin_home_url", app_url("admin"))
+      ],
+      [
+        "class" => "w3-theme w3-hover-blue",
+        "name"  => "Back",
+        "icon"  => "fa-arrow-circle-left",
+        "link"  => $this->app->fetch_param("admin_home_url", app_url("admin/list_posts"))
+      ]
+    ];
+    $this->app->view("navigation", ["menu" => $menu]);
+  }
 }
 ?>

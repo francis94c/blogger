@@ -116,6 +116,7 @@ class Admin extends SplintAppController {
       if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
     }
     $this->core->latchVarsToConfig();
+    $this->core->loadAdminPostListingNavigation();
     $this->load->package("francis94c/toast");
     $this->ci->toast->toast();
     $this->core->listPosts($page, $this->fetch_param("edit_post_url", $this->parent_uri("admin/edit_post")), false, false, false);
@@ -138,6 +139,7 @@ class Admin extends SplintAppController {
       if (!isset($this->params["w3css"])) $this->set_param("w3css", true);
       if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
     }
+    $this->core->loadEditorNavigation();
     $this->load->package("francis94c/toast");
     $this->ci->toast->toast();
     $this->core->loadEditor($this->fetch_param("save_post_url", $this->parent_uri("Admin/savePost")), $id);
