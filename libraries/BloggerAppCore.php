@@ -12,9 +12,9 @@ class BloggerAppCore {
    * [listPosts description]
    * @return [type] [description]
    */
-  function listPosts($page=1, $callback=null, $filter=false, $hits=false) {
+  function listPosts($page=1, $callback=null, $filter=false, $hits=false, $slug=true) {
     if (isset($this->app->params["app_page"]) && isset($this->app->params["page"])) $page = $this->app->params["page"];
-    $this->app->blog->renderPostItems(null, $callback, "../splints/{$this->app->splint}/views/empty_view", $page, $this->app->limit, $filter, $hits);
+    $this->app->blog->renderPostItems(null, $callback, "../splints/{$this->app->splint}/views/empty_view", $page, $this->app->limit, $filter, $hits, $slug);
     $params = [
       "base_url"    => $this->app->fetch_param("list_posts_url", app_url("posts")),
       "total_posts" => $this->app->blog->getPostsCount(),
@@ -36,8 +36,8 @@ class BloggerAppCore {
    * @param  [type] $callback [description]
    * @return [type]           [description]
    */
-  function loadEditor($callback) {
-    $this->app->blog->loadEditor($callback);
+  function loadEditor($callback, $postId=null) {
+    $this->app->blog->loadEditor($callback, $postId);
   }
   /**
    * [savePost description]

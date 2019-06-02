@@ -14,7 +14,7 @@ class Home extends SplintAppController {
       }
       return;
     }
-    $this->core->listPosts($page, $this->fetch_param("view_post_url", $this->parent_uri("view_post")));
+    $this->core->listPosts($page, $this->fetch_param("view_post_url", $this->parent_uri("view_post")), true);
   }
   /**
    * [install description]
@@ -74,7 +74,7 @@ class Home extends SplintAppController {
    * @return [type]        [description]
    */
   function listPosts($page=1) {
-    $this->core->listPosts($page, $this->fetch_param("view_post_url", $this->parent_uri("view_post")));
+    $this->core->listPosts($page, $this->fetch_param("view_post_url", $this->parent_uri("view_post")), true);
   }
 }
 ?>
