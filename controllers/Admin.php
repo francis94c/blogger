@@ -57,7 +57,7 @@ class Admin extends SplintAppController {
       if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
     }
     $this->core->latchVarsToConfig();
-    $this->core->loadEditor($this->parent_uri() . "Admin/savePost");
+    $this->core->loadEditor($this->parent_uri("Admin/savePost"));
   }
   /**
    * [savePost description]
@@ -70,21 +70,31 @@ class Admin extends SplintAppController {
     if ($posterId != null) $posterId = $this->session->userdata($posterId);
     $action = $this->core->savePost($posterId);
     $this->load->package("francis94c/toast");
-    if ($action == Blogger::CREATE_AND_PUBLISH || $action == Blogger::CREATE || $action == Blogger::PUBLISH) {
-      switch ($action) {
-        case Blogger::CREATE_AND_PUBLISH:
-          $this->ci->toast->latch("Blog Post Created and Published Succesfully!", "w3-green");
-          break;
-        case Blogger::CREATE:
-          $this->ci->toast->latch("Blog Post Created Successfully!", "w3-green");
-          break;
-        default:
-          $this->ci->toast->latch("There was an error saving the blog post", "w3-red");
-          break;
-      }
+    switch ($action) {
+      case Blogger::CREATE_AND_PUBLISH:
+        $this->ci->toast->latch("Blog Post Created and Published Succesfully!", "w3-green");
+        break;
+      case Blogger::CREATE:
+        $this->ci->toast->latch("Blog Post Created Successfully!", "w3-green");
+        break;
+      case Blogger::PUBLISH:
+        $this->ci->toast->latch("Blog Post published successfully!", "w3-green");
+        break;
+      case Blogger::EDIT:
+        $this->ci->toast->latch("Blog Post saved successfully!", "w3-green");
+        break;
+      case Blogger::DELETE:
+        $this->ci->toast->latch("Blog Post deleted successfully!", "w3-green");
+        break;
+      default:
+        $this->ci->toast->latch("There was an error saving the blog post", "w3-red");
+        break;
+    }
+    if ($action == Blogger::CREATE_AND_PUBLISH || $action == Blogger::CREATE ||
+    $action == Blogger::PUBLISH || $action == Blogger::DELETE) {
       redirect($this->parent_uri("admin/list_posts"));
     } else {
-      //redirect("Admin/editBlog/" . $this->input->post("id"));
+      redirect($this->parent_uri("admin/edit_post/" . $this->input->post("id")));
     }
   }
   /**
@@ -108,7 +118,7 @@ class Admin extends SplintAppController {
     $this->core->latchVarsToConfig();
     $this->load->package("francis94c/toast");
     $this->ci->toast->toast();
-    $this->core->listPosts($page, $this->fetch_param("edit_post_url", $this->parent_uri("admin/edit_post"), true));
+    $this->core->listPosts($page, $this->fetch_param("edit_post_url", $this->parent_uri("admin/edit_post")), false, false, false);
   }
   /**
    * [editPost description]
@@ -116,7 +126,21 @@ class Admin extends SplintAppController {
    * @return [type]     [description]
    */
   function editPost($id) {
-
+    if ($this->fetch_param("header_footer") == true) {
+      $data = array();
+      $data["selected"] = -1;
+      $this->fill_params_in_array(["title", "header_name"], $data);
+      $data["header_name"] .= " - Create Post";
+      $this->view("header", $data);
+      $this->set_param("w3css", false);
+      $this->set_param("fontsawesome", false);
+    } else {
+      if (!isset($this->params["w3css"])) $this->set_param("w3css", true);
+      if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
+    }
+    $this->load->package("francis94c/toast");
+    $this->ci->toast->toast();
+    $this->core->loadEditor($this->fetch_param("save_post_url", $this->parent_uri("Admin/savePost")), $id);
   }
   /**
    * [finalize description]
