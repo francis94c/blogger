@@ -37,7 +37,7 @@ class BloggerAppCore {
    * @return [type]           [description]
    */
   function loadEditor($callback, $postId=null) {
-    $this->app->blog->loadEditor($callback, $postId);
+    $this->app->blog->loadEditor($callback, $postId, false);
   }
   /**
    * [savePost description]
