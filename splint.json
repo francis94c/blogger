@@ -30,6 +30,6 @@
   "depends-on": [
     "francis94c/blog",
     "francis94c/cdn-helper",
-    "francis94c/ci-toast"
+    "francis94c/toast"
   ]
 }
