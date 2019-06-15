@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends SplintAppController {
+class AppHome extends SplintAppController {
 
   public $limit = 5;
 

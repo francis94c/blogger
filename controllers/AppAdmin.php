@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin extends SplintAppController {
+class AppAdmin extends SplintAppController {
 
   public $limit = 5;
 
@@ -29,10 +29,13 @@ class Admin extends SplintAppController {
    */
   function index() {
     $data = array();
-    $data["selected"] = -1;
-    $this->fill_params_in_array(["title", "header_name"], $data);
-    $data["header_name"] .= " - Admin";
-    $this->view("header", $data);
+    if ($this->fetch_param("header_footer", true))  {
+      $data["selected"] = -1;
+      $this->fill_params_in_array(["title", "header_name"], $data);
+      if (!isset($data["header_name"])) $data["header_name"] = "";
+      $data["header_name"] .= " - Admin";
+      $this->view("header", $data);
+    }
     $this->fill_params_in_array(["new_post_url"], $data);
     $this->view("admin");
     $this->set_param("w3css", false);
@@ -57,7 +60,7 @@ class Admin extends SplintAppController {
       if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
     }
     $this->core->latchVarsToConfig();
-    $this->core->loadEditor($this->parent_uri("Admin/savePost"));
+    $this->core->loadEditor($this->parent_uri("AppAdmin/savePost"));
   }
   /**
    * [savePost description]
@@ -142,7 +145,7 @@ class Admin extends SplintAppController {
     $this->core->loadEditorNavigation();
     $this->load->package("francis94c/toast");
     $this->ci->toast->toast();
-    $this->core->loadEditor($this->fetch_param("save_post_url", $this->parent_uri("Admin/savePost")), $id);
+    $this->core->loadEditor($this->fetch_param("save_post_url", $this->parent_uri("AppAdmin/savePost")), $id);
   }
   /**
    * [finalize description]
