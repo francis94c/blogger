@@ -35,11 +35,12 @@ class AppAdmin extends SplintAppController {
       if (!isset($data["header_name"])) $data["header_name"] = "";
       $data["header_name"] .= " - Admin";
       $this->view("header", $data);
+      if (!isset($this->params["w3css"])) $this->set_param("w3css", true);
+      if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
+      if (!isset($this->params["font"])) $this->set_param("font", true);
     }
     $this->fill_params_in_array(["new_post_url"], $data);
     $this->view("admin");
-    $this->set_param("w3css", false);
-    $this->set_param("fontsawesome", false);
     $this->core->latchVarsToConfig();
   }
   /**
@@ -55,9 +56,11 @@ class AppAdmin extends SplintAppController {
       $this->view("header", $data);
       $this->set_param("w3css", false);
       $this->set_param("fontsawesome", false);
+      $this->set_param("font", false);
     } else {
       if (!isset($this->params["w3css"])) $this->set_param("w3css", true);
       if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
+      if (!isset($this->params["font"])) $this->set_param("font", true);
     }
     $this->core->latchVarsToConfig();
     $this->core->loadEditor($this->parent_uri("AppAdmin/savePost"));
@@ -114,9 +117,11 @@ class AppAdmin extends SplintAppController {
       $this->view("header", $data);
       $this->set_param("w3css", false);
       $this->set_param("fontsawesome", false);
+      $this->set_param("font", false);
     } else {
       if (!isset($this->params["w3css"])) $this->set_param("w3css", true);
       if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
+      if (!isset($this->params["font"])) $this->set_param("font", true);
     }
     $this->core->latchVarsToConfig();
     $this->core->loadAdminPostListingNavigation();
@@ -138,9 +143,11 @@ class AppAdmin extends SplintAppController {
       $this->view("header", $data);
       $this->set_param("w3css", false);
       $this->set_param("fontsawesome", false);
+      $this->set_param("font", false);
     } else {
       if (!isset($this->params["w3css"])) $this->set_param("w3css", true);
       if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
+      if (!isset($this->params["font"])) $this->set_param("font", true);
     }
     $this->core->loadEditorNavigation();
     $this->load->package("francis94c/toast");

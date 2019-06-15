@@ -45,9 +45,11 @@ class AppHome extends SplintAppController {
       $this->view("header", $data);
       $this->set_param("w3css", false);
       $this->set_param("fontsawesome", false);
+      $this->set_param("font", false);
     } else {
       if (!isset($this->params["w3css"])) $this->set_param("w3css", true);
       if (!isset($this->params["fontsawesome"])) $this->set_param("fontsawesome", true);
+      if (!isset($this->params["font"])) $this->set_param("font", true);
     }
     $this->core->latchVarsToConfig();
   }
@@ -67,7 +69,7 @@ class AppHome extends SplintAppController {
    * @return [type]     [description]
    */
   function viewPost($id) {
-    $this->core->renderPost($id);
+    $this->core->renderPost($id, $this->view_path("post_view"));
   }
   /**
    * [listPosts description]

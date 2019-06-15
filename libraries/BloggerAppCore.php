@@ -30,6 +30,7 @@ class BloggerAppCore {
   function latchVarsToConfig() {
     $this->app->config->set_item("{$this->app->splint}/w3css", $this->app->fetch_param("w3css"));
     $this->app->config->set_item("{$this->app->splint}/fontsawesome", $this->app->fetch_param("fontsawesome"));
+    $this->app->config->set_item("{$this->app->splint}/font", $this->app->fetch_param("font"));
   }
   /**
    * [loadEditor description]
@@ -52,8 +53,8 @@ class BloggerAppCore {
    * @param  [type] $id [description]
    * @return [type]     [description]
    */
-  function renderPost($id) {
-    $this->app->blog->renderPost($id);
+  function renderPost($id, $view) {
+    $this->app->blog->renderPost($id, $view);
   }
   /**
    * [loadAdminPostListingNavigation description]
@@ -90,9 +91,6 @@ class BloggerAppCore {
       ]
     ];
     $this->app->view("navigation", ["menu" => $menu]);
-  }
-  function loadScripts() {
-    
   }
 }
 ?>
