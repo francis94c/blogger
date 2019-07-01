@@ -93,6 +93,7 @@ class AppAdmin extends SplintAppController {
         $this->ci->toast->latch("Blog Post deleted successfully!", "w3-green");
         break;
       default:
+        // Probably Blogger::ABORT or Blogger::NO_ACTION.
         $this->ci->toast->latch("There was an error saving the blog post", "w3-red");
         break;
     }
